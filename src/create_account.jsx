@@ -1,4 +1,4 @@
-import login_page from './assets/loginPage.png';
+import defaultPage from './assets/default.png';
 import { useState } from 'react';
 import { useNavigate  } from  'react-router-dom'; 
 import { Context } from './context';
@@ -37,7 +37,7 @@ function CreateAccount(){
     }
     return(
         <>
-         <div style={{backgroundImage:`url(${login_page})`}}>
+         <div style={{backgroundImage:`url(${defaultPage})`}}>
         <div style={mainDiv}>
              <div style={infoDiv}>
                   <h1 style={title}>Create Account</h1>

@@ -1,4 +1,4 @@
-import login_page from './assets/loginPage.png';
+import defaultPage from './assets/default.png';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -34,7 +34,7 @@ export function To_do(){
     }
     return(
       <>
-      <div style={{backgroundImage:`url(${login_page})`}}> 
+      <div style={{backgroundImage:`url(${defaultPage})`}}> 
       <div style={mainDiv}>
         <div style={page}>
           <button style={newWorkButton} onClick={()=>setNewTaxk(true)}>New Work</button>

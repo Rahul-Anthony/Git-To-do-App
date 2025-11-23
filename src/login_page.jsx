@@ -4,7 +4,7 @@ import boys from './assets/boys.png';
 import children from './assets/children.jpg';
 import student from './assets/student.png';
 import { useState } from 'react';
-import login_page from './assets/loginPage.png';
+import defaultPage from './assets/default.png';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from './context';
@@ -66,14 +66,14 @@ function LoginPage(){
     }   
     return(
         <>
-        <div style={{backgroundImage:`url(${login_page})`}}> 
+        <div style={{backgroundImage:`url(${defaultPage})`}}> 
         <div style={mainDiv}> 
                 <button style={{...button,position:"absolute",top:"3rem",right:"2rem"}} onClick={()=>setDisplaySettings(true)}>Settings</button>
             { diplaySettings && <div style={settingsDiv}>
                 <div><button style={X} onClick={()=>setDisplaySettings(false)}>X</button></div>         
                 <select onChange={(e)=>setTheme(e.target.value)} style={list}>      
                     <option  hidden style={list}>Theme</option>
-                    <option value={login_page} >default</option>
+                    <option value={defaultPage} >default</option>
                     <option value={student} >Student</option>
                     <option value={office} >Office</option>
                     <option value={children} >Chidren</option>
