@@ -27,6 +27,7 @@ app.put("/settings/:userId",async (req,res)=>{
        const modifySettings=await Setting.updateMany({userId:req.params.userId},{$set:{theme:theme,font:font}},{upsert:true});
         console.log(modifySettings);
         const settingData=await Setting.findOne({});
+        console.log(`machan :${settingData}`)
         res.json(settingData);
     }
     catch(err){
