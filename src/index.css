@@ -1,1 +1,15 @@
-
+/* 
+body{
+    
+    position:relative;
+   
+    background-size:cover;
+    height:100vh;
+    min-width:80vw;
+    min-height:80vh;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:font;
+} */

@@ -1,9 +1,11 @@
+import axios from 'axios';
 import defaultPage from './assets/default.png';
-import { useState } from 'react';
+import { useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from './context';
 export function To_do(){
+    const userId=localStorage.getItem("userId");
     const navigate=useNavigate();
     const {theme}=useContext(Context);
     const [text,setText]=useState("");
@@ -21,16 +23,31 @@ export function To_do(){
     const title={position:"absolute",top:"1rem",left:"44%",fontSize:"50px"};
     const contentDiv={display:"flex",alignItems:"center"};
     const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
-    function newArray(){
-      if (text.trim()!==""){
-        setTextList([...textList,text]);
-        setText("");}
-      else
-        {alert("Enter Something")}        
+   
+    const create=async()=>{
+      await axios.post(`http://localhost:5000/create`,{work:text,userId:userId})
+      .then(()=>read())
+
+      .then(()=>console.log("created successfully"))
+      .then(()=>console.log(userId))
+      .then(()=>{setText("")})
+      .catch((err)=>console.log(`Error : ${err}`))}
+  
+      const read=async()=>{
+       const read= await axios.get(`http://localhost:5000/read/${userId}`)
+       .then((read)=>{setTextList((read.data))
+                      console.log(`testing work${read.data}`)
+       })
+       .catch((err)=>{
+        console.log(`Error : ${err}`)
+       })
     }
-    function deleleWork(index){
-      const editedArray=textList.filter((_,i)=>i!==index);
-      setTextList(editedArray)
+    
+    
+    const remove=async(work)=>{
+      await axios.delete(`http://localhost:5000/remove/${work._id}`)
+      .then(()=>read())
+      .then(()=>console.log("deleted successfully"));
     }
     return(
       <>
@@ -41,12 +58,12 @@ export function To_do(){
           <h1 style={title}>TO-DO</h1>
           {newTaxk && (<div style={itemsDiv}>
           <input style={textBox} placeholder='Text here...' type="text" value={text} onChange={(e)=>setText(e.target.value)}/>
-          <button style={button} onClick={newArray}>Add</button>
+          <button style={button} onClick={create}>Add</button>
           <button style={{...button,backgroundColor:"red"}} onClick={()=>setNewTaxk(false)}>Cancel</button>
         </div>)}
         <div style={contentsDiv}>
           <ol>
-            {textList.map((item,index)=>(<div style={contentDiv}><li style={content} key={index}>{item}</li><button onClick={()=>deleleWork(index)} style={{...button,backgroundColor:"red"}}>Delete</button></div>))}
+            {textList.map((work)=>(<div style={contentDiv}><li style={content} key={work._id}>{work.work}</li><button onClick={()=>remove(work)} style={{...button,backgroundColor:"red"}}>Delete</button></div>))}
           </ol>
         </div>
         <button style={loginButton} onClick={()=>navigate('/')}>Login Page</button>

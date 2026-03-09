@@ -1,10 +1,14 @@
+import axios  from 'axios';
 import defaultPage from './assets/default.png';
 import { useState } from 'react';
 import { useNavigate  } from  'react-router-dom'; 
 import { Context } from './context';
 import { useContext } from 'react';
 function CreateAccount(){
+   
+    
     const navigate=useNavigate();
+    
     const {font}=useContext(Context);
     const{setUserData}=useContext(Context);
     const {theme}=useContext(Context);
@@ -18,7 +22,8 @@ function CreateAccount(){
     const buttonDiv={display:"flex",width:"30vw",justifyContent:"space-around"};
     const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
     const infoDiv={backgroundColor:"white",width:"40vw",height:"50vh",borderRadius:"30px",minWidth:"300px",minHeight:"300px",};
-    function validation(e){
+     function validation(e){
+        
         e.preventDefault();
         if (username==="" || password==="" || confrimPassword==="")
         {
@@ -30,15 +35,28 @@ function CreateAccount(){
         }
         else 
         {
-            setUserData({username:username,password:password});
-            alert("updated");
-            navigate('/');   
+             
+             axios.post("http://localhost:5000/createAccount",{name:username,password:password})
+             .then((res)=>{
+                setUserData({username:res.data.name,password:res.data.password})
+             
+                console.log(res.data)
+        })
+            .then(()=>{console.log("Account created successfully")
+                       
+                       alert("updated");
+                      
+                       navigate('/');})
+            .catch((err)=>console.log(`Error : ${err}`))
+            
+           
+
         }     
     }
     return(
         <>
          <div style={{backgroundImage:`url(${defaultPage})`}}>
-        <div style={mainDiv}>
+         <div style={mainDiv}>
              <div style={infoDiv}>
                   <h1 style={title}>Create Account</h1>
                   <div style={info}>
