@@ -26,9 +26,9 @@ app.put("/settings/:userId",async (req,res)=>{
             // console.log(createSettings);
        const modifySettings=await Setting.updateMany({userId:req.params.userId},{$set:{theme:theme,font:font}},{upsert:true});
         console.log(modifySettings);
-        const settingData=await Setting.findOne({});
+        const settingData=await Setting.find({userId:req.params.userId});
         console.log(`machan :${settingData}`)
-        res.json(settingData);
+        res.json(settingData[0]);
     }
     catch(err){
         console.log(`Error : ${err}`)
@@ -98,9 +98,11 @@ app.post('/loginAccount',async(req,res)=>{
         const font="serif";
         const createSettings=await Setting.create({theme,font,userId:user._id});
         console.log(createSettings);
-        const settingData=await Setting.findOne({});
-        console.log(settingData);
-        res.json({user:user,settingData:settingData});
+        
+         console.log(`mapla : ${ Setting.find({userId:createSettings.userId})}`)
+        const settingData=await Setting.find({userId:createSettings.userId});
+        console.log(settingData[0]);
+        res.json({user:user,settingData:settingData[0]});
 
         
     }   
