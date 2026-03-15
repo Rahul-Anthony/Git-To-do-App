@@ -16,23 +16,21 @@ export function To_do(){
     const itemsDiv={display:"flex",position:"absolute",top:"9rem",left:"19rem"};
     const textBox ={fontSize:"20px",padding:"2px",border:"2px solid black",borderRadius:"5px",width:"30rem",height:"2rem",textAlign:"center"};
     const button={backgroundColor:"green",color:"white",padding:"2px",border:"1px solid black",borderRadius:'10px',width:"5rem",height:"2rem",marginLeft:"1rem"};
-    const loginButton={...button,position:"absolute",bottom:"2rem",right:"2rem",backgroundColor:"#1E40AF"};
+    const loginButton={...button,position:"absolute",bottom:"2rem",right:"3rem",backgroundColor:"#1E40AF"};
+    const settingButton={...loginButton,position:"absolute",bottom:"2rem",right:"20rem",backgroundColor:"#1E40AF"};
     const newWorkButton={...button,backgroundColor:"green",position:"absolute",top:"1rem",left:"1rem"};
     const content={backgroundColor:"white",color:"black",width:"50rem",height:"2rem",padding:"5px",border:'1px solid white',borderRadius:"5px",textAlign:"center",marginBottom:"0.5rem",marginRight:"0.3rem"};
     const contentsDiv={position:"absolute",top:"15rem",left:"7rem",fontSize:"20px"};
     const title={position:"absolute",top:"1rem",left:"44%",fontSize:"50px"};
     const contentDiv={display:"flex",alignItems:"center"};
-    const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
-   
+    const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",width:"100vw",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
     const create=async()=>{
       await axios.post(`http://localhost:5000/create`,{work:text,userId:userId})
       .then(()=>read())
-
       .then(()=>console.log("created successfully"))
       .then(()=>console.log(userId))
       .then(()=>{setText("")})
       .catch((err)=>console.log(`Error : ${err}`))}
-  
       const read=async()=>{
        const read= await axios.get(`http://localhost:5000/read/${userId}`)
        .then((read)=>{setTextList((read.data))
@@ -42,8 +40,6 @@ export function To_do(){
         console.log(`Error : ${err}`)
        })
     }
-    
-    
     const remove=async(work)=>{
       await axios.delete(`http://localhost:5000/remove/${work._id}`)
       .then(()=>read())
@@ -65,8 +61,8 @@ export function To_do(){
           <ol>
             {textList.map((work)=>(<div style={contentDiv}><li style={content} key={work._id}>{work.work}</li><button onClick={()=>remove(work)} style={{...button,backgroundColor:"red"}}>Delete</button></div>))}
           </ol>
-        </div>
-        <button style={loginButton} onClick={()=>navigate('/')}>Login Page</button>
+        </div>  
+        <button style={settingButton} onClick={()=>navigate('/GoSettings')}>more...</button>
         </div>
       </div>  
       </div>

@@ -1,9 +1,6 @@
-
-
 import { createContext,useState } from "react";
 export const Context=createContext();
-export function UserProvider ({children}){
-   
+export function UserProvider ({children}){ 
     const [userData,setUserData]=useState({username:"",password:""});
     const [theme,setTheme]=useState("defaultPage");
     const [font,setFont]=useState('serif');

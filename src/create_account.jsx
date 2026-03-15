@@ -5,10 +5,7 @@ import { useNavigate  } from  'react-router-dom';
 import { Context } from './context';
 import { useContext } from 'react';
 function CreateAccount(){
-   
-    
     const navigate=useNavigate();
-    
     const {font}=useContext(Context);
     const{setUserData}=useContext(Context);
     const {theme}=useContext(Context);
@@ -20,10 +17,9 @@ function CreateAccount(){
     const namepw={width:"25vw",height:"2rem",borderRadius:"10px",backgroundColor:"black",color:"white",paddingLeft:"1rem"};
     const button={backgroundColor:"green",color:"white",width:"5vw",height:"2rem",borderRadius:"10px",bottom:"1rem",minWidth:"3rem"};
     const buttonDiv={display:"flex",width:"30vw",justifyContent:"space-around"};
-    const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
+    const mainDiv={position:"relative",backgroundImage:`url(${theme})`,backgroundSize:"cover",height:"100vh",width:"100vw",minWidth:"80vw",minHeight:"80vh",backgroundPosition:"center",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:font};
     const infoDiv={backgroundColor:"white",width:"40vw",height:"50vh",borderRadius:"30px",minWidth:"300px",minHeight:"300px",};
      function validation(e){
-        
         e.preventDefault();
         if (username==="" || password==="" || confrimPassword==="")
         {
@@ -34,23 +30,16 @@ function CreateAccount(){
             alert("Check Password")
         }
         else 
-        {
-             
+        {       
              axios.post("http://localhost:5000/createAccount",{name:username,password:password})
              .then((res)=>{
                 setUserData({username:res.data.name,password:res.data.password})
-             
                 console.log(res.data)
         })
-            .then(()=>{console.log("Account created successfully")
-                       
-                       alert("updated");
-                      
+            .then(()=>{console.log("Account created successfully")            
+                       alert("updated");         
                        navigate('/');})
             .catch((err)=>console.log(`Error : ${err}`))
-            
-           
-
         }     
     }
     return(
